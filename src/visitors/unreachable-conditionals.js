@@ -2,6 +2,30 @@ const t = require('@babel/types');
 
 const removeReferences = require('./helpers/remove-references');
 
+const isUnnecessaryBlock = (path, parentPath) => {
+  if (!path.isBlockStatement()) {
+    return false;
+  }
+  if (!parentPath.isBlock()) {
+    return false;
+  }
+  if (path.node.directives.length !== 0) {
+    return false;
+  }
+  if (!path.isScope()) {
+    return true;
+  }
+  return Object.keys(path.scope.bindings).length === 0;
+};
+
+const replaceWithBlock = (path, replacement) => {
+  if (isUnnecessaryBlock(replacement, path.parentPath)) {
+    path.replaceWithMultiple(replacement.node.body);
+  } else {
+    path.replaceWith(replacement.node);
+  }
+};
+
 module.exports = {
   Conditional: {
     enter(path, state) {
@@ -19,7 +43,7 @@ module.exports = {
         removeReferences(test);
         removeReferences(alternate);
 
-        path.replaceWith(path.node.consequent);
+        replaceWithBlock(path, consequent);
 
         test.removed = true;
         alternate.removed = true;
@@ -28,7 +52,7 @@ module.exports = {
         removeReferences(test);
         removeReferences(consequent);
 
-        path.replaceWith(path.node.alternate);
+        replaceWithBlock(path, alternate);
 
         test.removed = true;
         consequent.removed = true;

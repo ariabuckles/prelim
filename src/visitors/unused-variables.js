@@ -1,19 +1,5 @@
 const t = require('@babel/types');
 
-const isRemoved = (path) => {
-  while (path != null) {
-    path.resync();
-    if (path.removed) {
-      return true;
-    }
-    if (t.isProgram(path.node)) {
-      return false;
-    }
-    path = path.parentPath;
-  }
-  return true;
-}
-
 module.exports = {
   Scope: {
     exit(path, state) {
