@@ -11,6 +11,4 @@ const CoreVisitor = traverse.visitors.merge([
   UnreachableConditionals,
 ]);
 
-console.log('CoreVisitor', CoreVisitor, BooleanPropagation);
-
 module.exports = CoreVisitor;
