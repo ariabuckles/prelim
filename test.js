@@ -1,4 +1,4 @@
-var x = true;
+var x = true
 {
-  console.log('hi');
+  console.log(x)
 }
