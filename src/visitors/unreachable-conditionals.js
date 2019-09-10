@@ -1,5 +1,7 @@
 const t = require('@babel/types');
 
+const removeReferences = require('./helpers/remove');
+
 module.exports = {
   Conditional: {
     enter(path, state) {
@@ -12,22 +14,31 @@ module.exports = {
 
       const alternate = path.get('alternate');
       const consequent = path.get('consequent');
+      let removedIdentifiers;
       if (conditionValue) {
+        removeReferences(test);
+        removeReferences(alternate);
         path.replaceWith(path.node.consequent);
-        //test.remove();
-        //consequent.remove();
-        test.removed = true;
-        alternate.removed = true;
+        //test.removed = true;
+        //alternate.removed = true;
+        //removedIdentifiers = Object.assign(test.getBindingIdentifiers(), alternate.getBindingIdentifiers());
       } else if (path.node.alternate) {
+        console.log('REMOVING TEST REFS');
+        removeReferences(test);
+        console.log('REMOVING CONSEQUENT REFS');
+        removeReferences(consequent);
         path.replaceWith(path.node.alternate);
-        //test.remove();
-        //consequent.remove();
-        test.removed = true;
-        consequent.removed = true;
+        //test.removed = true;
+        //consequent.removed = true;
+        //removedIdentifiers = Object.assign(test.getBindingIdentifiers(), consequent.getBindingIdentifiers());
       } else {
+        //removedIdentifiers = path.getBindingIdentifiers();
+        //path.remove();
+        //path.removed = true;
+        removeReferences(path);
         path.remove();
       }
-      //console.log('REMOVED CONDITIONAL', test);
+      //console.log('REMOVED CONDITIONAL with decls for', removedIdentifiers);
     }
   }
 }

@@ -19,12 +19,18 @@ module.exports = {
     exit(path, state) {
       path.resync();
       const bindings = path.scope.bindings;
+      console.log('bindings:', Object.keys(bindings));
 
       for (const name of Object.keys(bindings)) {
         const binding = bindings[name];
 
-        let referenced = !binding.referencePaths.every(isRemoved);
-        if (referenced) {
+        console.log('Checking for removale of: ' + name);
+
+        //let referenced = !binding.referencePaths.every(isRemoved);
+        //console.log('var ' + name + ' is referenced?' + referenced,
+        //  "from: " + binding.referencePaths.map(isRemoved));
+        if (binding.referenced) {
+          console.log('binding was referenced: ', name);
           continue;
         }
         if (!binding.path.get('init').isPure()) {
