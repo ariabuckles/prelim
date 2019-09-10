@@ -4,7 +4,7 @@
   "description": "Pre-build Dead Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "codemod -p src/plugin.js test.js"
   },
   "repository": {
     "type": "git",
