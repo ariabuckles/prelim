@@ -1,1 +1,1 @@
-let x = true;console.log(x);
+let x = true;

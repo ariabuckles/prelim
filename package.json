@@ -4,7 +4,7 @@
   "description": "Pre-build Dead Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'let x = true; if (x) { let y = 7; console.log(x); }' > test.js && codemod -p src/plugin.js test.js"
+    "test": "echo 'let x = true || false; if (something && !x) { let y = 7; console.log(x); }' > test.js && codemod -p src/plugin.js test.js && cat test.js"
   },
   "repository": {
     "type": "git",

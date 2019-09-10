@@ -17,8 +17,10 @@ module.exports = {
       const consequent = path.get('consequent');
 
       if (conditionValue) {
-        removeReferences(test);
-        removeReferences(alternate);
+        console.log('removeReferences(test)');
+        removeReferences(test, state);
+        console.log('removeReferences(alternate)');
+        removeReferences(alternate, state);
 
         replaceWithPossibleBlock(path, consequent);
 
@@ -26,8 +28,10 @@ module.exports = {
         alternate.removed = true;
 
       } else if (path.node.alternate) {
-        removeReferences(test);
-        removeReferences(consequent);
+        console.log('removeReferences(test)');
+        removeReferences(test, state);
+        console.log('removeReferences(consequent)');
+        removeReferences(consequent, state);
 
         replaceWithPossibleBlock(path, alternate);
 
@@ -35,10 +39,10 @@ module.exports = {
         consequent.removed = true;
 
       } else {
-        removeReferences(path);
+        console.log('removeReferences(path)');
+        removeReferences(path, state);
         path.remove();
       }
-      path.parentPath.requeue();
     }
   }
 }
