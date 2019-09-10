@@ -2,12 +2,7 @@ const t = require('@babel/types');
 
 const isRemoved = (path) => {
   while (path != null) {
-    try {
-      path.resync();
-    } catch (e) {
-      console.log(path);
-      throw e;
-    }
+    path.resync();
     if (path.removed) {
       return true;
     }
@@ -25,19 +20,10 @@ module.exports = {
       path.resync();
       const bindings = path.scope.bindings;
 
-      console.log('BINDINGS', Object.keys(bindings));
       for (const name of Object.keys(bindings)) {
         const binding = bindings[name];
-        let referenced = false;
-        console.log(name, ':', binding.referencePaths.length)
-        for (const referencePath of binding.referencePaths) {
-          if (!isRemoved(referencePath)) {
-            referenced = true;
-          }
-          console.log('referenced?', referenced);
-        }
 
-        console.log('Binding', referenced);
+        let referenced = !binding.referencePaths.every(isRemoved);
         if (referenced) {
           continue;
         }
