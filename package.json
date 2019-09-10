@@ -1,0 +1,32 @@
+{
+  "name": "prelim",
+  "version": "0.0.1",
+  "description": "Pre-build Dead Code Eliminator for JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariabuckles/prelim.git"
+  },
+  "keywords": [
+    "dead",
+    "elimination",
+    "unused",
+    "removal"
+  ],
+  "author": "Aria Buckles (https://github.com/ariabuckles)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ariabuckles/prelim/issues"
+  },
+  "homepage": "https://github.com/ariabuckles/prelim#readme",
+  "dependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/traverse": "^7.6.0",
+    "@babel/types": "^7.6.1",
+    "jest": "^24.9.0",
+    "jscodeshift": "^0.6.4"
+  }
+}
