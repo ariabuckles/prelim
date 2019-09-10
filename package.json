@@ -26,6 +26,7 @@
     "@babel/core": "^7.6.0",
     "@babel/traverse": "^7.6.0",
     "@babel/types": "^7.6.1",
+    "babel-codemod": "^2.1.2",
     "jest": "^24.9.0",
     "jscodeshift": "^0.6.4"
   }
