@@ -1,1 +1,1 @@
-console.log(5);
+let x = true;console.log(x);
