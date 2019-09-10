@@ -5,7 +5,7 @@ const replaceWithPossibleBlock = require('./helpers/replace-with-possible-block'
 
 module.exports = {
   Conditional: {
-    enter(path, state) {
+    exit(path, state) {
       const test = path.get('test');
       const conditionValue = test.evaluateTruthy();
 
@@ -38,6 +38,7 @@ module.exports = {
         removeReferences(path);
         path.remove();
       }
+      path.parentPath.requeue();
     }
   }
 }

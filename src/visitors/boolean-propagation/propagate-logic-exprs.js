@@ -3,12 +3,14 @@ const t = require('@babel/types');
 module.exports = {
   LogicalExpression: {
     exit(path, state) {
-      const { left, operator, right } = path.node;
+      const { operator, right } = path.node;
       const { confident, value } = path.get('left').evaluate();
 
       if (!confident) {
         return;
       }
+
+      const left = t.booleanLiteral(value);
 
       if (operator === '&&' && value === true) {
         path.replaceWith(right);
