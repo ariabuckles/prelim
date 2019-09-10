@@ -4,19 +4,22 @@ module.exports = {
   LogicalExpression: {
     exit(path, state) {
       const { left, operator, right } = path.node;
-      if (!t.isBooleanLiteral(left)) {
+      const { confident, value } = path.get('left').evaluate();
+
+      if (!confident) {
         return;
       }
-      if (operator === '&&' && left.value === true) {
+
+      if (operator === '&&' && value === true) {
         path.replaceWith(right);
       }
-      if (operator === '&&' && left.value === false) {
+      if (operator === '&&' && value === false) {
         path.replaceWith(left);
       }
-      if (operator === '||' && left.value === true) {
+      if (operator === '||' && value === true) {
         path.replaceWith(left);
       }
-      if (operator === '||' && left.value === false) {
+      if (operator === '||' && value === false) {
         path.replaceWith(right);
       }
     }
