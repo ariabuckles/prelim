@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo 'let x = true || false; if (something && !x) { let y = 7; console.log(x); }' > test.js && codemod -p src/plugin.js test.js && cat test.js"
   },
+  "bin": "prelim-cli.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ariabuckles/prelim.git"
