@@ -1,25 +1,31 @@
 const t = require('@babel/types');
+const removeReferences = require('../helpers/remove-references');
 
 module.exports = {
   LogicalExpression: {
     exit(path, state) {
-      const { operator, right } = path.node;
-      const { confident, value } = path.get('left').evaluate();
+      const operator = path.node.operator;
+      const left = path.get('left');
+      const right = path.get('right');
 
+      const { confident, value } = left.evaluate();
       if (!confident) {
         return;
       }
 
-      const left = t.booleanLiteral(value);
+      removeReferences(left);
+      const newLeft = t.booleanLiteral(value);
 
       if (operator === '&&' && value === true) {
         path.replaceWith(right);
       }
       if (operator === '&&' && value === false) {
-        path.replaceWith(left);
+        removeReferences(right);
+        path.replaceWith(newLeft);
       }
       if (operator === '||' && value === true) {
-        path.replaceWith(left);
+        removeReferences(right);
+        path.replaceWith(newLeft);
       }
       if (operator === '||' && value === false) {
         path.replaceWith(right);

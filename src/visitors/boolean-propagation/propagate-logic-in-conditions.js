@@ -1,4 +1,5 @@
 const t = require('@babel/types');
+const removeReferences = require('../helpers/remove-references');
 
 /**
  * Is this a logical condition inside an if-statement or ternary
@@ -24,23 +25,28 @@ module.exports = {
         return;
       }
 
-      const { left, operator } = path.node;
-      const { confident, value } = path.get('right').evaluate();
+      const operator = path.node.operator;
+      const left = path.get('left');
+      const right = path.get('right');
 
+      const { confident, value } = right.evaluate();
       if (!confident) {
         return;
       }
 
-      const right = t.booleanLiteral(value);
+      removeReferences(right);
+      const newRight = t.booleanLiteral(value);
 
       if (operator === '&&' && value === true) {
         path.replaceWith(left);
       }
       if (operator === '&&' && value === false) {
-        path.replaceWith(right);
+        removeReferences(left);
+        path.replaceWith(newRight);
       }
       if (operator === '||' && value === true) {
-        path.replaceWith(right);
+        removeReferences(left);
+        path.replaceWith(newRight);
       }
       if (operator === '||' && value === false) {
         path.replaceWith(left);
