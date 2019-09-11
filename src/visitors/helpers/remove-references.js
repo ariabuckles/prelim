@@ -23,14 +23,13 @@ const BindingReferenceRemover = {
 const BindingReferenceRemoverVisitor = {...BindingReferenceRemover};
 
 const removeReferences = (path, state) => {
-  console.log('removing references from ', path.node.type);
+  if (path.removed) {
+    return;
+  }
   if (path.isReferencedIdentifier()) {
     BindingReferenceRemover.Identifier(path, state);
   } else {
     path.traverse(BindingReferenceRemoverVisitor, state);
-    if (path.node.test) {
-      removeReferences(path.get('test'), state);
-    }
   }
 };
 
