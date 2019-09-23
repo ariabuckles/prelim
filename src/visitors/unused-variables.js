@@ -8,7 +8,7 @@ module.exports = {
       for (const name of Object.keys(bindings)) {
         const binding = bindings[name];
 
-        if (binding.referenced) {
+        if (binding.referenced || !binding.constant) {
           continue;
         }
         if (!binding.path.get('init').isPure()) {
