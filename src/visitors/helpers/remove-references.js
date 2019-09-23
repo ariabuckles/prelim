@@ -9,7 +9,7 @@ const BindingReferenceRemover = {
     const thisReferenceIndex = binding.referencePaths.indexOf(path);
     if (thisReferenceIndex >= 0) {
       binding.referencePaths.splice(thisReferenceIndex, 1);
-      binding.derefence();
+      binding.dereference();
       if (!binding.referenced && binding.constant) {
         binding.path.requeue();
       }
