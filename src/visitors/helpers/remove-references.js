@@ -23,7 +23,7 @@ const BindingReferenceRemover = {
       return;
     }
 
-    const thisAssignmentIndex = binding.consantViolations.indexOf(path);
+    const thisAssignmentIndex = binding.constantViolations.indexOf(path);
     if (thisAssignmentIndex >= 0) {
       binding.constantViolations.splice(thisAssignmentIndex, 1);
       binding.constant = binding.constantViolations.length === 0;

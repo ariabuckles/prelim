@@ -14,7 +14,7 @@ module.exports = {
       }
 
       removeReferences(left);
-      const newLeft = t.booleanLiteral(value);
+      const newLeft = t.booleanLiteral(Boolean(value));
 
       if (operator === '&&' && value === true) {
         path.replaceWith(right);
