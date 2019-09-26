@@ -1,4 +1,5 @@
 const t = require('@babel/types');
+const removeDeclaration = require('./helpers/remove-declaration');
 
 module.exports = {
   Scope: {
@@ -16,13 +17,22 @@ module.exports = {
         }
 
         const parent = binding.path.parent;
+        const id = binding.path.get('id');
 
-        path.scope.removeOwnBinding(name);
-        if (t.isVariableDeclaration(parent.node) && parent.node.declarations.length <= 1) {
-          parent.remove();
-        } else {
-          binding.path.remove();
-        }
+        removeDeclaration(binding);
+
+//        if (binding.path.isVariableDeclarator() && id.isObjectPattern()) {
+//          console.log('id:', id.node);
+//        }
+//
+//        path.scope.removeOwnBinding(name);
+//        if (parent.isVariableDeclaration() && parent.node.declarations.length <= 1) {
+//          console.log('isVariableDeclaration')
+//          parent.remove();
+//        } else {
+//          console.log('removing biding only', binding.path.node)
+//          binding.path.remove();
+//        }
       }
     }
   }
