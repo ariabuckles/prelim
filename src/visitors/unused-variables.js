@@ -15,6 +15,9 @@ module.exports = {
         if (!binding.path.get('init').isPure()) {
           continue;
         }
+        if (!binding.path.parentPath.isVariableDeclaration()) {
+          continue;
+        }
 
         const parent = binding.path.parent;
         const id = binding.path.get('id');

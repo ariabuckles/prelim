@@ -4,7 +4,7 @@
   "description": "Pre-build Dead Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'let { x, y } = { x: 5, y: 6 }; console.log(x);' > test.js && codemod -p src/plugin.js test.js && cat test.js"
+    "test": "echo 'let h = 6, x = 5; let { z, y } = { x: 5, y: 6 }, {a, b} = {a: 5}; console.log(x);' > test.js && codemod -p src/plugin.js test.js && cat test.js"
   },
   "bin": "prelim-cli.js",
   "repository": {
