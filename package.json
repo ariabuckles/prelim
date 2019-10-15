@@ -1,6 +1,6 @@
 {
   "name": "prelim",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Pre-build Dead Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
@@ -24,11 +24,10 @@
   },
   "homepage": "https://github.com/ariabuckles/prelim#readme",
   "dependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/traverse": "^7.6.0",
-    "@babel/types": "^7.6.1",
+    "@babel/core": "^7.6.4",
+    "@babel/traverse": "^7.6.3",
+    "@babel/types": "^7.6.3",
     "@codemod/cli": "^2.1.10",
-    "jest": "^24.9.0",
-    "jscodeshift": "^0.6.4"
+    "jest": "^24.9.0"
   }
 }
