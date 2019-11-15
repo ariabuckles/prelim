@@ -55,7 +55,7 @@ engine/compiler.
 
 Check out [astexplorer.net][astexample] to see the above program as a syntax tree.
 
-[astexample]: https://astexplorer.net/#/gist/1a6a2d7fa664f25788beb46f6896fd20/fe7a07f4a8d3b163be397aa054585678edf95402
+[astexample]: https://astexplorer.net/#/gist/1a6a2d7fa664f25788beb46f6896fd20/e3306eb243ede793534be85221750e81f55fe89a
 
 Prelim consists of a collection of [Babel Visitors][visitors]: objects with
 methods for handling different types of JavaScript syntax nodes. Check out
