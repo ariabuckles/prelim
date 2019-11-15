@@ -114,7 +114,9 @@ class Binding {
 ```
 
 
-### Paths
+### [Paths](paths)
+
+[paths](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#paths)
 
 ```javascript
 class NodePath {
