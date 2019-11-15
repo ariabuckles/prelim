@@ -41,7 +41,7 @@ console.log(object1.a);
 
 This sort of transformation is particularly usefor when paired with some
 CSS-in-JS libraries that make use of style objects, like React Native or
-[Aphrodite](aphrodite). When using those libraries, a transformation like
+[Aphrodite][aphrodite]. When using those libraries, a transformation like
 this can find unused styles and clean them up from the codebase.
 
 [aphrodite]: https://github.com/Khan/aphrodite
@@ -91,7 +91,7 @@ manipulations.
 Here's a variety of the useful API information / helpers we might need:
 
 
-### [Bindings](bindings)
+### [Bindings][bindings]
 
 [bindings]: https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#bindings
 
@@ -114,7 +114,7 @@ class Binding {
 ```
 
 
-### [Paths](paths)
+### [Paths][paths]
 
 [paths]: https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#paths
 
