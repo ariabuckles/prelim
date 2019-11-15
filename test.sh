@@ -2,10 +2,7 @@
 
 cat > test.js <<- EOF
 const object1 = { a: 1, b: 2 };
-const object2 = { c: 3, d: 4 };
 console.log(object1.a);
-const prop = 'c';
-console.log(object2[prop]);
 EOF
 
 echo "// Before:"
