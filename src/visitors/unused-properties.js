@@ -14,13 +14,58 @@ module.exports = {
       // For each variable/binding,
       for (const name of Object.keys(bindings)) {
         const binding = bindings[name];
-        console.log('Found variable:', name);
 
-        console.log(`Variable '${name}' is used in the following places:`);
+        const declarator = binding.path;
+        const object = declarator.get('init');
+
+        if (!object.isObjectExpression()) {
+          continue;
+        }
+
+        if (!binding.constant) {
+          continue;
+        }
+
+        let propertyNames = new Set();
+        for (let property of object.get('properties')) {
+          let key = property.get('key');
+          if (key.isIdentifier() && !property.node.computed) {
+            propertyNames.add(key.node.name);
+          }
+        }
+
+        // Check that all usages are dot notation property access
+        let areAllUsagesDotProperties = binding.referencePaths.every(
+          (ref) => ref.parentPath.isMemberExpression() && !ref.parentPath.node.computed
+        );
+
+        if (!areAllUsagesDotProperties) {
+          continue;
+        }
+
+        let usedPropertyNames = new Set();
         for (let reference of binding.referencePaths) {
-          console.log(reference);
-          console.log('isIdentifier', reference.isIdentifier());
-          console.log('isMemberExpression', reference.parentPath.isMemberExpression());
+          let usage = reference.parentPath;
+          let key = usage.get('property');
+
+          if (!key.isIdentifier()) {
+            throw new Error("Internal error: expected property key was not an identifier");
+          }
+          usedPropertyNames.add(key.node.name);
+        }
+
+
+        // Set difference
+        let unusedPropertyNames = new Set([...propertyNames].filter(p => !usedPropertyNames.has(p)));
+
+        for (let property of object.get('properties')) {
+          let key = property.get('key');
+          if (key.isIdentifier() && !key.node.computed) {
+            let propertyName = key.node.name;
+            if (unusedPropertyNames.has(propertyName)) {
+              property.remove();
+            }
+          }
         }
       }
     }

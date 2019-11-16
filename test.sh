@@ -1,8 +1,9 @@
 #!/bin/bash
 
 cat > test.js <<- EOF
-const object1 = { a: 1, b: 2 };
-console.log(object1.a);
+let a = 'a';
+let object1 = { [a]: 1, b: 2 };
+console.log(object1.b);
 EOF
 
 echo "// Before:"
