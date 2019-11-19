@@ -29,7 +29,8 @@ module.exports = {
         let propertyNames = new Set();
         for (let property of object.get('properties')) {
           let key = property.get('key');
-          if (key.isIdentifier() && !property.node.computed) {
+          let value = property.get('value');
+          if (key.isIdentifier() && !property.node.computed && value.isPure()) {
             propertyNames.add(key.node.name);
           }
         }

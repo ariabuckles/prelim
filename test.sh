@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cat > test.js <<- EOF
-let object1 = { a: 1, b: 2 };
+let object1 = { a: console.log('hi'), b: 2, c: 5 };
 console.log(object1.b);
 EOF
 
