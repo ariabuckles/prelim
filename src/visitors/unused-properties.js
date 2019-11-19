@@ -30,8 +30,13 @@ module.exports = {
         for (let property of object.get('properties')) {
           let key = property.get('key');
           let value = property.get('value');
-          if (key.isIdentifier() && !property.node.computed && value.isPure()) {
-            propertyNames.add(key.node.name);
+          if (!property.node.computed && value.isPure()) {
+            console.log('key', key.node);
+            if (key.isIdentifier()) {
+              propertyNames.add(key.node.name);
+            } else if (key.isStringLiteral()) {
+              propertyNames.add(key.node.value);
+            }
           }
         }
 
@@ -61,11 +66,13 @@ module.exports = {
 
         for (let property of object.get('properties')) {
           let key = property.get('key');
-          if (key.isIdentifier() && !key.node.computed) {
-            let propertyName = key.node.name;
-            if (unusedPropertyNames.has(propertyName)) {
-              property.remove();
-            }
+          if (property.node.computed) {
+            continue;
+          }
+          let isRemovableIdentifier = key.isIdentifier() && unusedPropertyNames.has(key.node.name);
+          let isRemovableString = key.isStringLiteral() && unusedPropertyNames.has(key.node.value);
+          if (isRemovableIdentifier || isRemovableString) {
+            property.remove();
           }
         }
       }
