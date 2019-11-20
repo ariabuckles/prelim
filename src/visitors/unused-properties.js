@@ -31,7 +31,6 @@ module.exports = {
           let key = property.get('key');
           let value = property.get('value');
           if (!property.node.computed && value.isPure()) {
-            console.log('key', key.node);
             if (key.isIdentifier()) {
               propertyNames.add(key.node.name);
             } else if (key.isStringLiteral()) {
