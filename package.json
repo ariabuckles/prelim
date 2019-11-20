@@ -1,6 +1,6 @@
 {
   "name": "prelim",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pre-build Dead Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,10 @@
     "removal"
   ],
   "author": "Aria Buckles (https://github.com/ariabuckles)",
+  "contributors": [
+    "Aria Buckles (https://github.com/ariabuckles)",
+    "Kiran Bhattaram (https://github.com/kiran)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ariabuckles/prelim/issues"
