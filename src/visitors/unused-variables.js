@@ -1,4 +1,5 @@
 const t = require('@babel/types');
+const isPathPure = require('./helpers/is-path-pure');
 const removeDeclaration = require('./helpers/remove-declaration');
 
 /**
@@ -22,7 +23,7 @@ module.exports = {
 
         // If that variable is initialized to an expression with side effects
         // (i.e. a function call), then leave it and move on; it might be important
-        if (!binding.path.get('init').isPure()) {
+        if (!isPathPure(binding.path.get('init'), state)) {
           continue;
         }
 

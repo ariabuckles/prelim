@@ -1,4 +1,5 @@
 const t = require('@babel/types');
+const isPathPure = require('./helpers/is-path-pure');
 
 /**
  * Find unused properties on objects and remove them
@@ -7,7 +8,7 @@ module.exports = {
   // Go through each of the scopes in the program
   Scope: {
     // path is a Babel NodePath: https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#paths
-    exit(path) {
+    exit(path, state) {
       // For each scope, find all the variables ("bindings");
       const bindings = path.scope.bindings;
 
@@ -30,7 +31,7 @@ module.exports = {
         for (let property of object.get('properties')) {
           let key = property.get('key');
           let value = property.get('value');
-          if (!property.node.computed && value.isPure()) {
+          if (!property.node.computed && isPathPure(value, state)) {
             if (key.isIdentifier()) {
               propertyNames.add(key.node.name);
             } else if (key.isStringLiteral()) {
