@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fixtures should optimize simple-variable.js 1`] = `
+"let b = 6;
+console.log(b);"
+`;
+
+exports[`fixtures should optimize unused-properties.js 1`] = `
+"let object1 = {
+  a: console.log(1),
+  b: 2
+};
+console.log(object1.b);"
+`;
