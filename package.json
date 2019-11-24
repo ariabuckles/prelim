@@ -4,7 +4,7 @@
   "description": "Pre-build Dead Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "bash test.sh"
+    "test": "jest --no-watchman"
   },
   "bin": "prelim-cli.js",
   "repository": {
@@ -28,12 +28,15 @@
   },
   "homepage": "https://github.com/ariabuckles/prelim#readme",
   "dependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/traverse": "^7.6.3",
-    "@babel/types": "^7.6.3",
-    "@codemod/cli": "^2.1.10"
+    "@babel/core": "^7.7.4",
+    "@babel/traverse": "^7.7.4",
+    "@babel/types": "^7.7.4",
+    "@codemod/cli": "^2.1.12"
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "@babel/generator": "^7.7.4",
+    "@babel/parser": "^7.7.4",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1"
   }
 }
