@@ -9,8 +9,12 @@ const serializeAst = {
   },
 
   print(ast, serialize, indent) {
-    let { code } = generate(ast);
-    let formatted = prettier.format(code, prettierConfig);
+    let { code } = generate(ast, { compact: true });
+    let formatted = prettier.format(code, {
+      ...prettierConfig,
+      // lower print-width for inline tests to get better formatting
+      printWidth: 60,
+    });
     return formatted.trim();
   },
 };

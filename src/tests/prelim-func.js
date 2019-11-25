@@ -14,11 +14,15 @@ const unwrapBody = (body) => {
 };
 
 const prelimFunc = (options, inputFunc) => {
-  if (typeof options === 'function') {
+  if (typeof options === 'function' || typeof options === 'string') {
     inputFunc = options;
     options = { loose: true };
   }
-  let funcAst = parseExpression(String(inputFunc));
+  let input =
+    typeof inputFunc === 'function'
+      ? String(inputFunc)
+      : `() => { ${inputFunc} }`;
+  let funcAst = parseExpression(input);
   let program = t.program(unwrapBody(funcAst.body));
   let { ast } = transformFromAstSync(program, null, {
     ast: true,

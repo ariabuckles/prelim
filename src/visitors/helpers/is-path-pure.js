@@ -10,10 +10,15 @@ const { Scope } = require('@babel/traverse');
 function isProbablyPure(node, constantsOnly) {
   if (t.isMemberExpression(node)) {
     // Hook into MemberExpression checks:
-    return (
-      this.isPure(node.object, constantsOnly) &&
-      (!node.computed || this.isPure(node.property, constantsOnly))
-    );
+    let isLeftPure = this.isPure(node.object, constantsOnly);
+    let isRightPure =
+      !node.computed || this.isPure(node.property, constantsOnly);
+    return isLeftPure && isRightPure;
+
+  } else if (t.isIdentifier(node) && !this.getBinding(node.name)) {
+    // Hook into identifiers to declare global accesses as probably pure:
+    return true;
+
   } else {
     // Use default babel scope logic otherwise:
     return Scope.prototype.isPure.call(this, node, constantsOnly);
@@ -28,10 +33,11 @@ const isPathPure = (path, state) => {
     return scope.isPure(path.node, false);
   } else {
     let proxy = new Proxy(scope, {
-      get: (target, property) => property === 'isPure' ? isProbablyPure : target[property],
+      get: (target, property) =>
+        property === 'isPure' ? isProbablyPure : target[property],
     });
     return proxy.isPure(path.node, false);
   }
-}
+};
 
 module.exports = isPathPure;

@@ -39,7 +39,7 @@ describe('unused variables', () => {
       prelimFunc({ loose: true }, () => {
         const f = window.test.min;
       })
-    ).toMatchInlineSnapshot(`const f = window.test.min;`);
+    ).toMatchInlineSnapshot(``);
     expect(
       prelimFunc({ loose: false }, () => {
         const f = window.test.min;

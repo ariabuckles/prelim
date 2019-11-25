@@ -4,7 +4,9 @@
   "description": "Pre-build Dead Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "jest --no-watchman"
+    "run": "node prelim-cli.js ",
+    "test": "jest --no-watchman",
+    "update-tests": "jest --no-watchman --updateSnapshot"
   },
   "bin": "prelim-cli.js",
   "repository": {
