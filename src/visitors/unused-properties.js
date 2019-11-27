@@ -42,7 +42,8 @@ module.exports = {
 
         // Check that all usages are dot notation property access
         let areAllUsagesDotProperties = binding.referencePaths.every(
-          (ref) => ref.parentPath.isMemberExpression() && !ref.parentPath.node.computed
+          (ref) =>
+            ref.parentPath.isMemberExpression() && !ref.parentPath.node.computed
         );
 
         if (!areAllUsagesDotProperties) {
@@ -55,27 +56,32 @@ module.exports = {
           let key = usage.get('property');
 
           if (!key.isIdentifier()) {
-            throw new Error("Internal error: expected property key was not an identifier");
+            throw new Error(
+              'Internal error: expected property key was not an identifier'
+            );
           }
           usedPropertyNames.add(key.node.name);
         }
 
-
         // Set difference
-        let unusedPropertyNames = new Set([...propertyNames].filter(p => !usedPropertyNames.has(p)));
+        let unusedPropertyNames = new Set(
+          [...propertyNames].filter((p) => !usedPropertyNames.has(p))
+        );
 
         for (let property of object.get('properties')) {
           let key = property.get('key');
           if (property.node.computed) {
             continue;
           }
-          let isRemovableIdentifier = key.isIdentifier() && unusedPropertyNames.has(key.node.name);
-          let isRemovableString = key.isStringLiteral() && unusedPropertyNames.has(key.node.value);
+          let isRemovableIdentifier =
+            key.isIdentifier() && unusedPropertyNames.has(key.node.name);
+          let isRemovableString =
+            key.isStringLiteral() && unusedPropertyNames.has(key.node.value);
           if (isRemovableIdentifier || isRemovableString) {
             property.remove();
           }
         }
       }
-    }
-  }
+    },
+  },
 };

@@ -9,14 +9,14 @@ const removeDeclarator = (declaratorPath, identifierName) => {
   const right = declaratorPath.get('init');
 
   if (left.isObjectPattern()) {
-    let property = left.get('properties').find(
-      (prop) => prop.node.value.name === identifierName
-    );
+    let property = left
+      .get('properties')
+      .find((prop) => prop.node.value.name === identifierName);
 
     if (right.isObjectExpression()) {
-      let initProperty = right.get('properties').find(
-        (prop) => prop.node.key.name === property.node.key.name
-      );
+      let initProperty = right
+        .get('properties')
+        .find((prop) => prop.node.key.name === property.node.key.name);
       if (initProperty) {
         initProperty.remove();
       }

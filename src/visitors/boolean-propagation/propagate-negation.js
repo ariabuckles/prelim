@@ -15,6 +15,6 @@ module.exports = {
         return;
       }
       path.replaceWith(t.booleanLiteral(!path.node.argument.value));
-    }
-  }
+    },
+  },
 };

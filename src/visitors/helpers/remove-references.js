@@ -14,7 +14,6 @@ const BindingReferenceRemover = {
         binding.path.requeue();
       }
     }
-
   },
 
   BindingIdentifier(path) {
@@ -34,7 +33,7 @@ const BindingReferenceRemover = {
   },
 };
 
-const BindingReferenceRemoverVisitor = {...BindingReferenceRemover};
+const BindingReferenceRemoverVisitor = { ...BindingReferenceRemover };
 
 const removeReferences = (path, state) => {
   if (path.removed) {

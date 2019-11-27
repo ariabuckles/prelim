@@ -14,11 +14,9 @@ function isProbablyPure(node, constantsOnly) {
     let isRightPure =
       !node.computed || this.isPure(node.property, constantsOnly);
     return isLeftPure && isRightPure;
-
   } else if (t.isIdentifier(node) && !this.getBinding(node.name)) {
     // Hook into identifiers to declare global accesses as probably pure:
     return true;
-
   } else {
     // Use default babel scope logic otherwise:
     return Scope.prototype.isPure.call(this, node, constantsOnly);

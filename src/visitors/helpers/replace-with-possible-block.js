@@ -1,9 +1,7 @@
 const isUnnecessaryBlock = require('./is-unnecessary-block');
 
 const replaceWithPossibleBlock = (path, replacement) => {
-
   if (isUnnecessaryBlock(replacement, path.parentPath)) {
-
     // Move any variables back to the parent scope:
     if (replacement.isScope()) {
       for (const name of Object.keys(replacement.scope.bindings)) {
@@ -12,7 +10,6 @@ const replaceWithPossibleBlock = (path, replacement) => {
     }
 
     path.replaceWithMultiple(replacement.node.body);
-
   } else {
     path.replaceWith(replacement.node);
   }

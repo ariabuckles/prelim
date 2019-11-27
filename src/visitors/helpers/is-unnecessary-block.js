@@ -16,8 +16,7 @@ const isUnnecessaryBlock = (path, parentPath) => {
   // bindings in the parent scope
   const bindings = path.scope.bindings;
   const parentScope = parentPath.scope;
-  return Object.keys(bindings)
-    .every((name) => !parentScope.hasBinding(name));
+  return Object.keys(bindings).every((name) => !parentScope.hasBinding(name));
 };
 
 module.exports = isUnnecessaryBlock;

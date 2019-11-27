@@ -24,7 +24,6 @@ module.exports = {
 
         test.removed = true;
         alternate.removed = true;
-
       } else if (path.node.alternate) {
         removeReferences(test, state);
         removeReferences(consequent, state);
@@ -33,11 +32,10 @@ module.exports = {
 
         test.removed = true;
         consequent.removed = true;
-
       } else {
         removeReferences(path, state);
         path.remove();
       }
-    }
-  }
-}
+    },
+  },
+};

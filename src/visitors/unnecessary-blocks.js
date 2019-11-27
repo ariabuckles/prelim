@@ -13,6 +13,6 @@ module.exports = {
       if (!path.isScope() || Object.keys(path.scope.bindings).length !== 0) {
         path.replaceWithMultiple(path.node.body);
       }
-    }
-  }
+    },
+  },
 };

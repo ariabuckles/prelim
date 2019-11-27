@@ -30,7 +30,6 @@ module.exports = {
       if (operator === '||' && value === false) {
         path.replaceWith(right);
       }
-    }
-  }
+    },
+  },
 };
-

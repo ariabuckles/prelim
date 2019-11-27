@@ -8,15 +8,16 @@ const plugin = path.join(__dirname, 'src', 'plugin.js');
 const cliBin = path.join(__dirname, '..', '.bin', 'prelim');
 
 const args = [...process.argv];
-const index = args.indexOf(cliJs) + 1 || args.indexOf(cliBin) + 1 || args.length;
+const index =
+  args.indexOf(cliJs) + 1 || args.indexOf(cliBin) + 1 || args.length;
 
 args.splice(index, 0, '-p', path.join(__dirname, 'src', 'plugin.js'));
 
 run(args)
-  .then(status => {
+  .then((status) => {
     process.exit(status);
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err.stack);
     process.exit(-1);
   });

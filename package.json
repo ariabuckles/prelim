@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "run": "node prelim-cli.js ",
+    "format": "prettier --write '*.js' 'src/**/*.js'",
     "test": "jest --no-watchman",
     "update-tests": "jest --no-watchman --updateSnapshot"
   },
