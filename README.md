@@ -79,9 +79,14 @@ the expression always evaluate to truthy or falsy values.
 
 ## Bugs
 
-Please report bugs or issues you run into with [github issues][issues]
+Please report bugs or issues you run into with [github issues][issues].
 
 [issues]: https://github.com/ariabuckles/prelim/issues
+
+
+## Contributing
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for background for contributing.
 
 
 ## License

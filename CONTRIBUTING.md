@@ -1,6 +1,6 @@
-# Let's add unused-object-property-removal to Prelim
+# About Contributing to Prelim
 
-## Feature Description
+## Prelim Background
 
 Prelim is an unused-code-removal tool for JavaScript.
 
@@ -47,7 +47,7 @@ this can find unused styles and clean them up from the codebase.
 [aphrodite]: https://github.com/Khan/aphrodite
 
 
-## Background
+## Prelim Internals Background
 
 When JavaScript is run, it is first transformed into a syntax tree: a tree of
 node objects describing the code from the point of view of JavaScript
@@ -65,25 +65,17 @@ for an example visitor which removes unused variables.
 [visitors]: https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#visitors
 
 
-## Overview
+## Adding a new removal feature
 
-I've created a new stub visitor in [src/visitors/unused-properties.js](src/visitors/unused-properties.js),
-which we should be able to use to add support for removing unused object
-properties. I've added a method for handling found `Scope`s,
-which are any block that can be the scope of a variable.
+Create a new visitor in [src/visitors](src/visitors), and add it to the
+[Core Visitor](src/visitors/core.js). Take a look at some of the other
+visitors in src/visitors to see what is possible, or check out [the
+babel plugin handbook][babel-handbook].
 
-At a high level, to remove unused properties, we want to do the following:
-
-1. Find all object variables, and for each of those:
-2. Determine if the object is only accessed through dot notation properties
-3. Determine what properties the object has
-4. Determine what properties are accessed directly as properties on the object
-   (through dot notation only)
-5. Take the difference of 3 (object properties) and 4 (accessed properties)
-6. Remove the properties in the difference from the object
+[babel-handbook]: https://github.com/jamiebuilds/babel-handbook/
 
 
-## Logistics
+## Some babel details
 
 To help us, Babel has a pretty nice API for these sorts of queries and
 manipulations.
@@ -147,5 +139,5 @@ class NodePath {
 
 ## Testing
 
-`npm test` will run a basic test script, which you can find in test.sh
+Tests are found in `src/visitors/tests/` and can be run with jest or via `npm test`
 
