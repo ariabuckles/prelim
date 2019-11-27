@@ -38,7 +38,6 @@ npx prelim src/directory/
 Or as a babel plugin:
 
 ```javascript
-(`"prelim"`)
 module.exports = {
     /* ... */
     plugins: [
