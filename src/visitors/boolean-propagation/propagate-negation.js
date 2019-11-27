@@ -1,5 +1,10 @@
 const t = require('@babel/types');
 
+/**
+ * Turn `!true` into `false` and `!false` into `true`
+ *
+ * TODO(aria): Use evaluation & isPathPure to do this in more complex cases
+ */
 module.exports = {
   UnaryExpression: {
     exit(path, state) {
