@@ -41,9 +41,10 @@ const addIgnorePath = (item, prev) =>
 
 program
   .name(packageJson.name)
+  .arguments('[--] <filesOrPatterns...>')
   .option(
     '--strict',
-    'turn on strict mode and disable probably-safe optimizations'
+    'turn on strict mode and disable probably-safe optimizations (default: loose mode)',
   )
   .option(
     '--ignore-path <file>',
@@ -52,8 +53,18 @@ program
     defaultIgnorePaths
   )
   .option(
+    '--source-type <script|module>',
+    'parse as a JS script, an ES module, or specify "unambiguous" to let babel determine',
+    'unambiguous'
+  )
+  .option(
+    '--printer <recast|prettier|babel>',
+    'which code printer to use',
+    'recast'
+  )
+  .option(
     '--colors <auto|always|off>',
-    "whether to display colours. 'auto' defaults to true of running in a TTY.",
+    'whether to display colours. "auto" defaults to true of running in a TTY.',
     'auto'
   )
   .version(
@@ -61,9 +72,14 @@ program
     '-v, --version',
     'output the current prelim version'
   )
-  .arguments('[--] <filesOrPatterns...>');
+  .on('--help', () => console.log() /* print a newline after help */);
 
 program.parse(process.argv);
+
+if (program.args.length === 0) {
+  program.outputHelp();
+  process.exit(1);
+}
 
 let rawFiles = [];
 let patterns = [];
@@ -88,7 +104,17 @@ for (let fileOrPattern of program.args) {
 }
 
 let ignores = ignore().add(
-  program.ignorePath.map((file) => fs.readFileSync(file, 'utf8'))
+  program.ignorePath.map((file) => {
+    try {
+      return fs.readFileSync(file, 'utf8');
+    } catch (e) {
+      if (e.code === 'ENOENT') {
+        return '';
+      } else {
+        throw e;
+      }
+    }
+  })
 );
 
 let files = rawFiles.concat(
@@ -138,8 +164,10 @@ for (let file of files) {
     let code = fs.readFileSync(file, 'utf8');
     let { code: result } = transform(code, {
       plugins: [[plugin, { loose: !program.strict }]],
-      printer: program.printer || 'recast',
-      sourceType: program.sourceType || 'unambiguous',
+      printer: program.printer,
+      sourceType: program.sourceType,
+      babelrc: false,
+      configFile: false,
     });
     if (result !== code) {
       status = 'modified';
