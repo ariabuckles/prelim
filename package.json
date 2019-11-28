@@ -34,7 +34,11 @@
     "@babel/core": "^7.7.4",
     "@babel/traverse": "^7.7.4",
     "@babel/types": "^7.7.4",
-    "@codemod/cli": "^2.1.12"
+    "@codemod/core": "^1.0.3",
+    "@codemod/parser": "^1.0.4",
+    "commander": "^4.0.1",
+    "glob-gitignore": "^1.0.14",
+    "ignore": "^5.1.4"
   },
   "devDependencies": {
     "@babel/generator": "^7.7.4",
