@@ -36,6 +36,7 @@ const STATUS_INFO = {
 const program = new commander.Command();
 
 const defaultIgnorePaths = ['.gitignore'];
+const addIgnore = (item, prev) => (item === '' ? [] : prev.concat([item]));
 const addIgnorePath = (item, prev) =>
   item === '' ? [] : prev === defaultIgnorePaths ? [item] : prev.concat([item]);
 
@@ -44,7 +45,13 @@ program
   .arguments('[--] <filesOrPatterns...>')
   .option(
     '--strict',
-    'turn on strict mode and disable probably-safe optimizations (default: loose mode)',
+    'turn on strict mode and disable probably-safe optimizations (default: loose mode)'
+  )
+  .option(
+    '--ignore <pattern>',
+    'Filename pattern to ignore (repeatable)',
+    addIgnore,
+    ['node_modules/']
   )
   .option(
     '--ignore-path <file>',
@@ -103,21 +110,20 @@ for (let fileOrPattern of program.args) {
   }
 }
 
-let ignores = ignore().add(
-  program.ignorePath.map((file) => {
-    try {
-      return fs.readFileSync(file, 'utf8');
-    } catch (e) {
-      if (e.code === 'ENOENT') {
-        return '';
-      } else {
-        throw e;
-      }
+let ignores = ignore();
+for (let ignoreFile of program.ignorePath) {
+  try {
+    ignores.add(fs.readFileSync(ignoreFile, 'utf8'));
+  } catch (e) {
+    if (e.code !== 'ENOENT') {
+      throw e;
     }
-  })
-);
+  }
+}
+ignores.add(program.ignore);
+let individualIgnores = ignore().add(program.ignore);
 
-let files = rawFiles.concat(
+let files = individualIgnores.filter(rawFiles).concat(
   patterns.length === 0
     ? []
     : glob.sync(patterns, {
