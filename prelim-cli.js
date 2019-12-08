@@ -120,9 +120,12 @@ for (let ignoreFile of program.ignorePath) {
     }
   }
 }
+
 ignores.add(program.ignore);
 let individualIgnores = ignore().add(program.ignore);
 
+// Fix a crash where patterns starting with './' are invalid
+patterns = patterns.map((p) => p.replace(/^\.\//, ''));
 let files = individualIgnores.filter(rawFiles).concat(
   patterns.length === 0
     ? []
