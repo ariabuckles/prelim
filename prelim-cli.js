@@ -96,7 +96,7 @@ for (let fileOrPattern of program.args) {
     if (stats.isFile()) {
       rawFiles.push(fileOrPattern);
     } else if (stats.isDirectory()) {
-      patterns.push(`${fileOrPattern}/**/*.{js,mjs,cjs,jsx,ts,tsx}`);
+      patterns.push(`${fileOrPattern}/**/*.{js,mjs,cjs,jsx,ts,tsx,vue}`);
     } else {
       patterns.push(fileOrPattern);
     }
@@ -167,7 +167,16 @@ for (let file of files) {
   let status = 'unchanged';
   let error = null;
   try {
-    let code = fs.readFileSync(file, 'utf8');
+    let fileSource = fs.readFileSync(file, 'utf8');
+
+    let code = fileSource;
+    if (file.endsWith('.vue')) {
+      let match = /<script(?: [^>]+)?>([\s\S]*?)<\/script>/.exec(fileSource);
+      if (match) {
+        code = match[1];
+      }
+    }
+
     let { code: result } = transform(code, {
       plugins: [[plugin, { loose: !program.strict }]],
       printer: program.printer,
@@ -175,8 +184,19 @@ for (let file of files) {
       babelrc: false,
       configFile: false,
     });
+
     if (result !== code) {
       status = 'modified';
+
+      if (file.endsWith('.vue') && code !== fileSource) {
+        result = fileSource.replace(
+          /(<script(?: [^>]+)?>)([\s\S]*?)(<\/script>)/,
+          (all, tag, code, close) => {
+            return tag + result + close;
+          }
+        );
+      }
+
       fs.writeFileSync(file, result, 'utf8');
     }
   } catch (e) {
