@@ -1,6 +1,6 @@
 {
   "name": "prelim",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Pre-build Unused Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
