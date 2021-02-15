@@ -1,6 +1,6 @@
 {
   "name": "prelim",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Pre-build Unused Code Eliminator for JavaScript",
   "main": "index.js",
   "scripts": {
@@ -39,19 +39,19 @@
     "!**/tests/**"
   ],
   "dependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/traverse": "^7.7.4",
-    "@babel/types": "^7.7.4",
-    "@codemod/core": "^1.0.3",
-    "@codemod/parser": "^1.0.4",
-    "commander": "^4.0.1",
+    "@babel/core": "^7.12.16",
+    "@babel/traverse": "^7.12.13",
+    "@babel/types": "^7.12.13",
+    "@codemod/core": "^1.1.0",
+    "@codemod/parser": "^1.1.0",
+    "commander": "^7.0.0",
     "glob-gitignore": "^1.0.14",
-    "ignore": "^5.1.4"
+    "ignore": "^5.1.8"
   },
   "devDependencies": {
-    "@babel/generator": "^7.7.4",
-    "@babel/parser": "^7.7.4",
-    "jest": "^24.9.0",
-    "prettier": "^1.19.1"
+    "@babel/generator": "^7.12.15",
+    "@babel/parser": "^7.12.16",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1"
   }
 }
